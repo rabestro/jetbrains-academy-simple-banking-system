@@ -5,6 +5,11 @@ public class Account {
     private static long lastAccountNumber = 1;
 
     private long customerAccountNumber;
-    private String cardNumber;
+    private int checksum = 0;
+
     private String pin;
+
+    public String getCardNumber() {
+        return String.format("%s%09d%d", IIN, customerAccountNumber, checksum);
+    }
 }
