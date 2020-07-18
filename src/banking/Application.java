@@ -57,5 +57,17 @@ public class Application implements Runnable {
         final var cardNumber = scanner.nextLine();
         System.out.println("Enter your PIN:");
         final var pinNumber = scanner.nextLine();
+
+        repository.getAccount(cardNumber, pinNumber)
+                .ifPresentOrElse(this::manageAccount, this::wrongAccount);
+    }
+
+    private void wrongAccount() {
+        log.warning("Wrong card number or PIN!");
+        System.out.println("Wrong card number or PIN!");
+    }
+
+    private void manageAccount(final Account account) {
+
     }
 }
