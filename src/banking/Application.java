@@ -17,27 +17,22 @@ public class Application implements Runnable {
 
     @Override
     public void run() {
-        while (menu()) {
+        while (true) {
+            System.out.println("1. Create an account\n"
+                    + "2. Log into account\n" + "0. Exit");
+            switch (scanner.nextInt()) {
+                case 0:
+                    System.exit(0);
+                case 1:
+                    createAccount();
+                    break;
+                case 2:
+                    logIntoAccount();
+                    break;
+                default:
+                    System.out.println("Incorrect menu number!");
+            }
         }
-    }
-
-    private boolean menu() {
-        System.out.println("1. Create an account\n" +
-                "2. Log into account\n" +
-                "0. Exit");
-        switch (scanner.nextInt()) {
-            case 0:
-                return false;
-            case 1:
-                createAccount();
-                break;
-            case 2:
-                logIntoAccount();
-                break;
-            default:
-                System.out.println("Incorrect menu number!");
-        }
-        return true;
     }
 
     private void createAccount() {
@@ -70,7 +65,19 @@ public class Application implements Runnable {
     private void manageAccount(final Account account) {
         log.info("You have successfully logged in!");
         System.out.println("You have successfully logged in!");
-        System.out.println("1. Balance\n" + "2. Log out\n" + "0. Exit");
+        while (true) {
+            System.out.println("1. Balance\n" + "2. Log out\n" + "0. Exit");
+            final int choice = scanner.nextInt();
+            switch (choice) {
+                case 0:
+                    System.exit(0);
+                case 1:
+                    System.out.println("Balance: " + account.getBalance());
+                    break;
+                case 2:
+                    return;
+            }
+        }
 
     }
 }
