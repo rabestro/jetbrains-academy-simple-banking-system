@@ -35,7 +35,7 @@ public class Application implements Runnable {
                 logIntoAccount();
                 break;
             default:
-                System.out.println("Incorrect number!");
+                System.out.println("Incorrect menu number!");
         }
         return true;
     }
@@ -68,6 +68,9 @@ public class Application implements Runnable {
     }
 
     private void manageAccount(final Account account) {
+        log.info("You have successfully logged in!");
+        System.out.println("You have successfully logged in!");
+        System.out.println("1. Balance\n" + "2. Log out\n" + "0. Exit");
 
     }
 }
