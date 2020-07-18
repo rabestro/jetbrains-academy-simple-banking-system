@@ -1,7 +1,6 @@
 package banking.repository;
 
 import banking.Account;
-import banking.repository.AccountsRepository;
 
 import java.util.List;
 
