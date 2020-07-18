@@ -3,8 +3,11 @@ package banking;
 import banking.repository.AccountsRepository;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Application implements Runnable {
+    private static final Logger log = Logger.getLogger(Application.class.getName());
+
     private final Scanner scanner = new Scanner(System.in);
     private final AccountsRepository repository;
 
@@ -29,6 +32,8 @@ public class Application implements Runnable {
                 createAccount();
                 break;
             case 2:
+                logIntoAccount();
+                break;
             default:
                 System.out.println("Incorrect number!");
         }
@@ -36,6 +41,8 @@ public class Application implements Runnable {
     }
 
     private void createAccount() {
+        log.info("Create an account");
+
         final var account = repository.createAccount();
 
         System.out.println("Your card has been created\n" +
@@ -44,6 +51,11 @@ public class Application implements Runnable {
     }
 
     private void logIntoAccount() {
+        log.info("Log into account");
 
+        System.out.println("Enter your card number:");
+        final var cardNumber = scanner.nextLine();
+        System.out.println("Enter your PIN:");
+        final var pinNumber = scanner.nextLine();
     }
 }
