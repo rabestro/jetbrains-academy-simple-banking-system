@@ -33,4 +33,8 @@ public class Application implements Runnable {
                 "Your card PIN:\n" +
                 "6826");
     }
+
+    private String createCardNumber() {
+        return "4000004938320895";
+    }
 }
