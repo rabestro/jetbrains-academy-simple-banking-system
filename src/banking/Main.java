@@ -20,6 +20,8 @@ public class Main {
     public static void main(String[] args) {
         log.info("Simple Banking System started.");
 
-        new Application().run();
+        new Application(
+                new InMemoryDatabase()
+        ).run();
     }
 }

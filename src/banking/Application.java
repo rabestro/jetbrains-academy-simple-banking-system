@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class Application implements Runnable {
     private final Scanner scanner = new Scanner(System.in);
+    private final AccountsRepository repository;
+
+    public Application(AccountsRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void run() {
