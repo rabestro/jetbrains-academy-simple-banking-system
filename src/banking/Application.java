@@ -25,4 +25,12 @@ public class Application implements Runnable {
         }
         return true;
     }
+
+    private void createAccount() {
+        System.out.println("Your card has been created\n" +
+                "Your card number:\n" +
+                "4000004938320895\n" +
+                "Your card PIN:\n" +
+                "6826");
+    }
 }
