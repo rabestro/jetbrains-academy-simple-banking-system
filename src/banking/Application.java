@@ -5,7 +5,7 @@ import banking.repository.AccountsRepository;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-public class Application implements Runnable {
+public final class Application implements Runnable {
     private static final Logger log = Logger.getLogger(Application.class.getName());
 
     private final Scanner scanner = new Scanner(System.in);
@@ -75,6 +75,7 @@ public class Application implements Runnable {
                     System.out.println("Balance: " + account.getBalance());
                     break;
                 case 2:
+                    System.out.println("You have successfully logged out!");
                     return;
             }
         }
