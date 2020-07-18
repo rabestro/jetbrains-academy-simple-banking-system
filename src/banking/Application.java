@@ -26,6 +26,8 @@ public class Application implements Runnable {
             case 0:
                 return false;
             case 1:
+                createAccount();
+                break;
             case 2:
             default:
                 System.out.println("Incorrect number!");
@@ -41,7 +43,7 @@ public class Application implements Runnable {
                 "\nYour card PIN:\n" + account.getPinNumber());
     }
 
-    private String createCardNumber() {
-        return "4000004938320895";
+    private void logIntoAccount() {
+
     }
 }
