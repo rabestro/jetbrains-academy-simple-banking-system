@@ -75,6 +75,7 @@ public final class Application implements Runnable {
                     System.out.println("Balance: " + account.getBalance());
                     break;
                 case 2:
+                    System.out.println("You have successfully logged out!");
                     return;
             }
         }
