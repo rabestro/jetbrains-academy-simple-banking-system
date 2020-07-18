@@ -16,8 +16,10 @@ public class Main {
             System.err.println("Could not setup logger configuration: " + e.toString());
         }
     }
+
     public static void main(String[] args) {
         log.info("Simple Banking System started.");
-        System.out.println("Hello World!");
+
+        new Application().run();
     }
 }
