@@ -1,5 +1,7 @@
 package banking;
 
+import banking.repository.InMemoryDatabase;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.LogManager;

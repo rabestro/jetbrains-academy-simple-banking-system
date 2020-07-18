@@ -1,4 +1,6 @@
-package banking;
+package banking.repository;
+
+import banking.Account;
 
 public interface AccountsRepository {
     void addAccount(Account account);
