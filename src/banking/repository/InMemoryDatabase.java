@@ -8,6 +8,10 @@ import java.util.Optional;
 public class InMemoryDatabase implements AccountsRepository {
     private List<Account> accounts;
 
+    public InMemoryDatabase(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Override
     public void addAccount(Account account) {
         accounts.add(account);

@@ -4,6 +4,7 @@ import banking.repository.InMemoryDatabase;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -23,7 +24,9 @@ public class Main {
         log.info("Simple Banking System started.");
 
         new Application(
-                new InMemoryDatabase()
+                new InMemoryDatabase(
+                        new ArrayList<>()
+                )
         ).run();
     }
 }

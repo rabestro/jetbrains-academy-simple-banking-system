@@ -20,7 +20,7 @@ public class Application implements Runnable {
         while (true) {
             System.out.println("1. Create an account\n"
                     + "2. Log into account\n" + "0. Exit");
-            switch (scanner.nextInt()) {
+            switch (getMenuItem()) {
                 case 0:
                     System.exit(0);
                 case 1:
@@ -67,7 +67,7 @@ public class Application implements Runnable {
         System.out.println("You have successfully logged in!");
         while (true) {
             System.out.println("1. Balance\n" + "2. Log out\n" + "0. Exit");
-            final int choice = scanner.nextInt();
+            final int choice = getMenuItem();
             switch (choice) {
                 case 0:
                     System.exit(0);
@@ -79,5 +79,9 @@ public class Application implements Runnable {
             }
         }
 
+    }
+
+    private int getMenuItem() {
+        return Integer.parseInt(scanner.nextLine());
     }
 }
