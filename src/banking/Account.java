@@ -7,15 +7,14 @@ import static java.lang.String.format;
 public final class Account {
     private static final Random random = new Random();
     private static final String IIN = "400000";
-    private static long lastAccountNumber = 1;
 
     private final long accountNumber;
     private final int checksum;
     private int pin;
     private long balance;
 
-    public Account() {
-        accountNumber = lastAccountNumber++;
+    public Account(final long id) {
+        accountNumber = id;
         checksum = LuhnAlgorithm.calculateChecksum(IIN + getAccountNumber());
         balance = 0;
         pin = generatePin();
