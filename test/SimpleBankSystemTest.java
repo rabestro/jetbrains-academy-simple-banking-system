@@ -298,7 +298,8 @@ public class SimpleBankSystemTest extends StageTest<String> {
             closeConnection();
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
+            return CheckResult.wrong("Can't connect the database!");
         }
 
         if (!result)
@@ -384,7 +385,8 @@ public class SimpleBankSystemTest extends StageTest<String> {
             closeConnection();
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
+            return CheckResult.wrong("Can't connect the database!");
         }
 
         if (!isCompleted)
