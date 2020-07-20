@@ -13,6 +13,7 @@ public class SQLiteDatabase implements bankDatabase {
     private static final Logger log = Logger.getLogger(SQLiteDatabase.class.getName());
     private static final String SQL_ADD_ACCOUNT = "INSERT INTO card (number, pin) VALUES (?, ?)";
     private static final String SQL_FIND_ACCOUNT = "SELECT number, pin, balance FROM card WHERE number = ? AND pin = ?";
+    private static final String SQL_UPDATE_ACCOUNT = "UPDATE card SET balance = ? WHERE number = ?";
 
     private final String databaseName;
     private final String url;
@@ -47,6 +48,8 @@ public class SQLiteDatabase implements bankDatabase {
 
     @Override
     public Optional<Account> findAccount(final String creditCardNumber, final String pinNumber) {
+        log.info(() -> "Searching for account #" + creditCardNumber);
+
         try (final var connection = DriverManager.getConnection(url);
              final var sql = connection.prepareStatement(SQL_FIND_ACCOUNT)) {
             sql.setString(1, creditCardNumber);
@@ -68,7 +71,24 @@ public class SQLiteDatabase implements bankDatabase {
     }
 
     @Override
-    public void updateAccount(final Account account) {
+    public Optional<Account> updateAccount(final Account account) {
+        log.info(() -> "Update Account #" + account.getCardNumber());
+
+        try (final var connection = DriverManager.getConnection(url);
+             final var sql = connection.prepareStatement(SQL_UPDATE_ACCOUNT)) {
+
+            sql.setLong(1, account.getBalance());
+            sql.setString(2, account.getCardNumber());
+            sql.executeUpdate();
+
+            log.info(() -> String.format("Updated card# %s with balance: %d",
+                    account.getCardNumber(), account.getBalance()));
+
+            return Optional.of(account);
+        } catch (SQLException e) {
+            log.log(Level.WARNING, "Can't add account to " + databaseName, e);
+        }
+        return Optional.empty();
 
     }
 

@@ -9,5 +9,5 @@ public interface bankDatabase {
 
     Optional<Account> findAccount(final String creditCardNumber, final String pinNumber);
 
-    void updateAccount(final Account account);
+    Optional<Account> updateAccount(final Account account);
 }

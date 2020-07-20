@@ -32,8 +32,8 @@ public class InMemoryDatabase implements bankDatabase {
     }
 
     @Override
-    public void updateAccount(final Account account) {
-
+    public Optional<Account> updateAccount(final Account account) {
+        return Optional.ofNullable(account);
     }
 
 }

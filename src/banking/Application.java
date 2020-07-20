@@ -87,7 +87,11 @@ public final class Application implements Runnable {
                     break;
                 case 2:
                     System.out.println("Enter income:");
-
+                    account.addIncome(scanner.nextLong());
+                    repository.updateAccount(account)
+                            .ifPresentOrElse(
+                                    a -> System.out.println("Income was added!"),
+                                    () -> System.out.println("Account was not updated!"));
                     break;
                 case 3:
                     System.out.println("Transfer");
