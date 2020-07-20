@@ -1,5 +1,6 @@
 package banking;
 
+import banking.domain.Account;
 import banking.repository.AccountsRepository;
 
 import java.util.Scanner;

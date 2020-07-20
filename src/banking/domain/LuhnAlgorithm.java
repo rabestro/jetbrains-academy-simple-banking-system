@@ -1,4 +1,4 @@
-package banking;
+package banking.domain;
 
 public final class LuhnAlgorithm {
 

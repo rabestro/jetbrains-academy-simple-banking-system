@@ -1,6 +1,6 @@
 package banking.repository;
 
-import banking.Account;
+import banking.domain.Account;
 
 import java.util.List;
 import java.util.Optional;

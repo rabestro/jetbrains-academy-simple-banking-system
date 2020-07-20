@@ -1,6 +1,6 @@
 package banking.repository;
 
-import banking.Account;
+import banking.domain.Account;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
