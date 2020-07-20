@@ -16,13 +16,8 @@ public class InMemoryDatabase implements AccountsRepository {
     @Override
     public Account createAccount() {
         Account account = new Account(lastAccountNumber++);
-        addAccount(account);
-        return account;
-    }
-
-    @Override
-    public void addAccount(Account account) {
         accounts.add(account);
+        return account;
     }
 
     @Override
