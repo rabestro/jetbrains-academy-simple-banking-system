@@ -98,7 +98,7 @@ public final class Application implements Runnable {
                     break;
                 case 4:
                     System.out.println("The account has been closed!");
-                    break;
+                    return;
                 case 5:
                     System.out.println("You have successfully logged out!");
                     return;

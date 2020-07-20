@@ -36,4 +36,9 @@ public class InMemoryDatabase implements bankDatabase {
         return Optional.ofNullable(account);
     }
 
+    @Override
+    public boolean deleteAccount(Account account) {
+        return accounts.remove(account);
+    }
+
 }
