@@ -26,7 +26,7 @@ public class SQLiteDatabase implements AccountsRepository {
         try (final var connection = DriverManager.getConnection(url)) {
             connection.setAutoCommit(false);
             final var account = new Account(generateAccountId());
-            final var query = String.format("insert into card (number, pin) values (%s, %s)",
+            final var query = String.format("INSERT INTO card (number, pin) VALUES (%s, %s)",
                     account.getCardNumber(), account.getPinNumber());
 
             try (final var statement = connection.createStatement()) {
@@ -43,12 +43,30 @@ public class SQLiteDatabase implements AccountsRepository {
     }
 
     @Override
-    public Optional<Account> getAccount(String creditCardNumber, String pinNumber) {
+    public Optional<Account> getAccount(final String creditCardNumber, final String pinNumber) {
         try (final var connection = DriverManager.getConnection(url)) {
             connection.setAutoCommit(false);
 
+            final var query = String.format("SELECT number, pin, balance FROM card WHERE number = %s AND pin = %s",
+                    creditCardNumber, pinNumber);
+            try (final var statement = connection.createStatement();
+                 final var resultSet = statement.executeQuery(query)) {
+
+                if (!resultSet.next()) {
+                    return Optional.empty();
+                }
+                final var bankAccount = Account.builder()
+                        .setCard(resultSet.getString("number"))
+                        .setPin(resultSet.getString("pin"))
+                        .setBalance(resultSet.getInt("balance"))
+                        .build();
+                return Optional.of(bankAccount);
+
+            } catch (SQLException e) {
+                log.log(Level.WARNING, "Can't get account from " + databaseName, e);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.log(Level.WARNING, "Can't connect to " + databaseName, e);
         }
         return Optional.empty();
     }
