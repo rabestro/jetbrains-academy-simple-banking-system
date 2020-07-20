@@ -36,13 +36,17 @@ public final class Application implements Runnable {
     }
 
     private void createAccount() {
-        log.info("Create an account");
+        log.info("1. Create an account");
+        repository.createAccount()
+                .ifPresentOrElse(this::printCardCreated,
+                        () -> System.out.println("Can't create an account"));
+    }
 
-        final var account = repository.createAccount();
-
+    private void printCardCreated(Account card) {
         System.out.println("Your card has been created\n" +
-                "Your card number:\n" + account.getCardNumber() +
-                "\nYour card PIN:\n" + account.getPinNumber());
+                "Your card number:\n" + card.getCardNumber() +
+                "\nYour card PIN:\n" + card.getPinNumber());
+
     }
 
     private void logIntoAccount() {
@@ -63,7 +67,7 @@ public final class Application implements Runnable {
     }
 
     private void manageAccount(final Account account) {
-        log.info("You have successfully logged in!");
+        log.info("The user has successfully logged in!");
         System.out.println("You have successfully logged in!");
         while (true) {
             System.out.println("1. Balance\n" + "2. Log out\n" + "0. Exit");

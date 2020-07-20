@@ -7,30 +7,30 @@ import static java.lang.String.format;
 public final class Account {
     private static final Random random = new Random();
     private static final String IIN = "400000";
-    private static long lastAccountNumber = 1;
 
-    private final long accountNumber;
-    private final int checksum;
-    private int pin;
+    private final String cardNumber;
+    private String pinNumber;
     private long balance;
 
-    public Account() {
-        accountNumber = lastAccountNumber++;
-        checksum = LuhnAlgorithm.calculateChecksum(IIN + getAccountNumber());
+    public Account(final long id) {
+        var checksum = LuhnAlgorithm.calculateChecksum(IIN + format("%09d", id));
         balance = 0;
-        pin = generatePin();
+        cardNumber = format("%s%09d%d", IIN, id, checksum);
+        pinNumber = format("%04d", generatePin());
+    }
+
+    public Account(String card, String pin, long balance) {
+        this.cardNumber = card;
+        this.pinNumber = pin;
+        this.balance = balance;
     }
 
     public String getPinNumber() {
-        return format("%04d", pin);
+        return pinNumber;
     }
 
     public String getCardNumber() {
-        return format("%s%09d%d", IIN, accountNumber, checksum);
-    }
-
-    public String getAccountNumber() {
-        return format("%09d", accountNumber);
+        return cardNumber;
     }
 
     private static int generatePin() {
@@ -39,5 +39,25 @@ public final class Account {
 
     public long getBalance() {
         return balance;
+    }
+
+    public static AccountBuilderCard builder() {
+        return card -> pin -> balance -> () -> new Account(card, pin, balance);
+    }
+
+    public interface AccountBuilderCard {
+        AccountBuilderPin setCard(final String cardNumber);
+    }
+
+    public interface AccountBuilderPin {
+        AccountBuilderBalance setPin(final String pin);
+    }
+
+    public interface AccountBuilderBalance {
+        AccountBuilder setBalance(final long balance);
+    }
+
+    public interface AccountBuilder {
+        Account build();
     }
 }
