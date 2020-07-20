@@ -6,9 +6,11 @@ import java.util.Optional;
 
 public class SQLiteDatabase implements AccountsRepository {
     private final String databaseName;
+    private final String url;
 
     public SQLiteDatabase(String databaseName) {
         this.databaseName = databaseName;
+        url = "jdbc:sqlite:./" + databaseName;
     }
 
     @Override
