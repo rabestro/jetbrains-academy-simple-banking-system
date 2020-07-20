@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class SQLiteDatabase implements AccountsRepository {
     private static final Logger log = Logger.getLogger(SQLiteDatabase.class.getName());
-    private static final String SQL_ADD_ACCOUNT = "INSERT INTO card (number, pin) VALUES (?,?)";
+    private static final String SQL_ADD_ACCOUNT = "INSERT INTO card (number, pin) VALUES (?, ?)";
     private static final String SQL_FIND_ACCOUNT = "SELECT number, pin, balance FROM card WHERE number = ? AND pin = ?";
 
     private final String databaseName;
@@ -30,8 +30,9 @@ public class SQLiteDatabase implements AccountsRepository {
              final var sql = connection.prepareStatement(SQL_ADD_ACCOUNT)) {
 
             final var account = new Account(generateAccountId());
-            sql.setNString(1, account.getCardNumber());
-            sql.setNString(2, account.getPinNumber());
+            sql.setString(1, account.getCardNumber());
+            sql.setString(2, account.getPinNumber());
+            log.finest(sql::toString);
             sql.executeUpdate();
 
             log.info(() -> String.format("Saved to database: Card: %s Pin: %s Balance: %d",
@@ -48,8 +49,8 @@ public class SQLiteDatabase implements AccountsRepository {
     public Optional<Account> getAccount(final String creditCardNumber, final String pinNumber) {
         try (final var connection = DriverManager.getConnection(url);
              final var sql = connection.prepareStatement(SQL_FIND_ACCOUNT)) {
-            sql.setNString(1, creditCardNumber);
-            sql.setNString(2, pinNumber);
+            sql.setString(1, creditCardNumber);
+            sql.setString(2, pinNumber);
             final var resultSet = sql.executeQuery();
 
             if (!resultSet.next()) {
