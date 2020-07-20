@@ -1,6 +1,7 @@
 package banking;
 
 import banking.domain.Account;
+import banking.domain.LuhnAlgorithm;
 import banking.repository.bankDatabase;
 
 import java.util.Scanner;
@@ -87,14 +88,14 @@ public final class Application implements Runnable {
                     break;
                 case 2:
                     System.out.println("Enter income:");
-                    account.addIncome(scanner.nextLong());
+                    account.addIncome(Long.parseLong(scanner.nextLine()));
                     repository.updateAccount(account)
                             .ifPresentOrElse(
                                     a -> System.out.println("Income was added!"),
                                     () -> System.out.println("Account was not updated!"));
                     break;
                 case 3:
-                    System.out.println("Transfer");
+                    transfer(account);
                     break;
                 case 4:
                     if (repository.deleteAccount(account)) {
@@ -111,5 +112,15 @@ public final class Application implements Runnable {
 
     private int getMenuItem() {
         return Integer.parseInt(scanner.nextLine());
+    }
+
+    private void transfer(final Account account) {
+        System.out.println("Transfer");
+        System.out.println("Enter card number:");
+        final var cardNumber = scanner.nextLine();
+        if (!LuhnAlgorithm.isCorrectNumber(cardNumber)) {
+            System.out.println("Probably you made mistake in the card number. Please try again!");
+            return;
+        }
     }
 }
