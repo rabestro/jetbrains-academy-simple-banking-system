@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public class InMemoryDatabase implements bankDatabase {
-    private static final Logger log = Logger.getLogger(SQLiteDatabase.class.getName());
+    private static final Logger log = Logger.getLogger(InMemoryDatabase.class.getName());
     private static long lastAccountNumber = 1;
     private final List<Account> accounts;
 
