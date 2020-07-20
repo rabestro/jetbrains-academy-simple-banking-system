@@ -18,6 +18,7 @@ public class SQLiteDatabase implements AccountsRepository {
     public SQLiteDatabase(String databaseName) {
         this.databaseName = databaseName;
         url = "jdbc:sqlite:./" + databaseName;
+        log.info("Created SQLiteDatabase with url=" + url);
     }
 
     @Override
@@ -32,6 +33,8 @@ public class SQLiteDatabase implements AccountsRepository {
             try (final var statement = connection.createStatement()) {
                 statement.executeUpdate(query);
                 connection.commit();
+                log.info(() -> String.format("Saved to database: Card: %s Pin: %s Balance: %d",
+                        account.getCardNumber(), account.getPinNumber(), account.getBalance()));
                 return account;
             } catch (SQLException e) {
                 log.log(Level.WARNING, "Can't add new account to " + databaseName, e);

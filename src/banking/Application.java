@@ -36,7 +36,7 @@ public final class Application implements Runnable {
     }
 
     private void createAccount() {
-        log.info("Create an account");
+        log.info("1. Create an account");
 
         final var account = repository.createAccount();
 
