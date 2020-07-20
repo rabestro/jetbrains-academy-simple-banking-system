@@ -1,5 +1,6 @@
 package banking.domain;
 
+import java.util.Objects;
 import java.util.Random;
 
 import static java.lang.String.format;
@@ -39,6 +40,10 @@ public final class Account {
 
     public void addIncome(final long income) {
         balance += income;
+    }
+
+    public boolean isCorrectPin(final String pinNumber) {
+        return Objects.equals(this.pinNumber, pinNumber);
     }
 
     public static AccountBuilderCard builder() {

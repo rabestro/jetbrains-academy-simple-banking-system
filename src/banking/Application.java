@@ -69,7 +69,7 @@ public final class Application implements Runnable {
     }
 
     private void manageAccount(final Account account) {
-        log.info("The user has successfully logged in!");
+        log.info(() -> "The user has logged in #" + account.getCardNumber());
         System.out.println("You have successfully logged in!");
         while (true) {
             System.out.println(String.join("\n",
@@ -122,5 +122,22 @@ public final class Application implements Runnable {
             System.out.println("Probably you made mistake in the card number. Please try again!");
             return;
         }
+        final var recipient = repository.findAccount(cardNumber);
+
+        if (recipient.isEmpty()) {
+            System.out.println("Such a card does not exist.");
+            return;
+        }
+        System.out.println("Enter how much money you want to transfer:");
+        final var money = Long.parseLong(scanner.nextLine());
+        if (money > account.getBalance()) {
+            System.out.println("Not enough money!");
+            return;
+        }
+        account.addIncome(-money);
+        recipient.get().addIncome(money);
+        repository.updateAccount(account);
+        repository.updateAccount(recipient.get());
+        System.out.println("Success!");
     }
 }

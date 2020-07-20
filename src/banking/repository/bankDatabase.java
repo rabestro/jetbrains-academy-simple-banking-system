@@ -9,6 +9,8 @@ public interface bankDatabase {
 
     Optional<Account> findAccount(final String creditCardNumber, final String pinNumber);
 
+    Optional<Account> findAccount(final String creditCardNumber);
+
     Optional<Account> updateAccount(final Account account);
 
     boolean deleteAccount(final Account account);

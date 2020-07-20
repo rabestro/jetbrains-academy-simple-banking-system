@@ -25,9 +25,15 @@ public class InMemoryDatabase implements bankDatabase {
 
     @Override
     public Optional<Account> findAccount(final String creditCardNumber, final String pinNumber) {
+        log.info(() -> "Log in account #" + creditCardNumber);
+        return findAccount(creditCardNumber).filter(account -> account.getPinNumber().equals(pinNumber));
+    }
+
+    @Override
+    public Optional<Account> findAccount(final String creditCardNumber) {
+        log.info(() -> "Searching for account #" + creditCardNumber);
         return accounts.stream()
-                .filter(account -> account.getCardNumber().equals(creditCardNumber)
-                        && account.getPinNumber().equals(pinNumber))
+                .filter(account -> account.getCardNumber().equals(creditCardNumber))
                 .findFirst();
     }
 

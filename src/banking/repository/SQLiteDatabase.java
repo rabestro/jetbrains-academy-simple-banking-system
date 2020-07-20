@@ -12,7 +12,8 @@ import java.util.logging.Logger;
 public class SQLiteDatabase implements bankDatabase {
     private static final Logger log = Logger.getLogger(SQLiteDatabase.class.getName());
     private static final String SQL_ADD_ACCOUNT = "INSERT INTO card (number, pin) VALUES (?, ?)";
-    private static final String SQL_FIND_ACCOUNT = "SELECT number, pin, balance FROM card WHERE number = ? AND pin = ?";
+    private static final String SQL_LOGIN_ACCOUNT = "SELECT number, pin, balance FROM card WHERE number = ? AND pin = ?";
+    private static final String SQL_FIND_ACCOUNT = "SELECT number, pin, balance FROM card WHERE number = ?";
     private static final String SQL_UPDATE_ACCOUNT = "UPDATE card SET balance = ? WHERE number = ?";
     private static final String SQL_DELETE_ACCOUNT = "DELETE FROM card WHERE number = ?";
 
@@ -49,12 +50,17 @@ public class SQLiteDatabase implements bankDatabase {
 
     @Override
     public Optional<Account> findAccount(final String creditCardNumber, final String pinNumber) {
+        log.info(() -> "Log in account #" + creditCardNumber);
+        return findAccount(creditCardNumber).filter(a -> a.getPinNumber().equals(pinNumber));
+    }
+
+    @Override
+    public Optional<Account> findAccount(final String creditCardNumber) {
         log.info(() -> "Searching for account #" + creditCardNumber);
 
         try (final var connection = DriverManager.getConnection(url);
              final var sql = connection.prepareStatement(SQL_FIND_ACCOUNT)) {
             sql.setString(1, creditCardNumber);
-            sql.setString(2, pinNumber);
             final var resultSet = sql.executeQuery();
             if (!resultSet.next()) {
                 return Optional.empty();
