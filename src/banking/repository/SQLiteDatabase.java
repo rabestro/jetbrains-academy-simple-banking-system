@@ -14,6 +14,7 @@ public class SQLiteDatabase implements bankDatabase {
     private static final String SQL_ADD_ACCOUNT = "INSERT INTO card (number, pin) VALUES (?, ?)";
     private static final String SQL_FIND_ACCOUNT = "SELECT number, pin, balance FROM card WHERE number = ? AND pin = ?";
     private static final String SQL_UPDATE_ACCOUNT = "UPDATE card SET balance = ? WHERE number = ?";
+    private static final String SQL_DELETE_ACCOUNT = "DELETE FROM card WHERE number = ?";
 
     private final String databaseName;
     private final String url;
@@ -94,6 +95,18 @@ public class SQLiteDatabase implements bankDatabase {
 
     @Override
     public boolean deleteAccount(final Account account) {
+        log.info(() -> "Delete Account #" + account.getCardNumber());
+
+        try (final var connection = DriverManager.getConnection(url);
+             final var sql = connection.prepareStatement(SQL_DELETE_ACCOUNT)) {
+
+            sql.setString(1, account.getCardNumber());
+            sql.executeUpdate();
+            log.info(() -> "Deleted card# %s " + account.getCardNumber());
+            return true;
+        } catch (SQLException e) {
+            log.log(Level.WARNING, "Can't add account to " + databaseName, e);
+        }
         return false;
     }
 

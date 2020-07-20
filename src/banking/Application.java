@@ -97,8 +97,10 @@ public final class Application implements Runnable {
                     System.out.println("Transfer");
                     break;
                 case 4:
-                    System.out.println("The account has been closed!");
-                    return;
+                    if (repository.deleteAccount(account)) {
+                        System.out.println("The account has been closed!");
+                        return;
+                    }
                 case 5:
                     System.out.println("You have successfully logged out!");
                     return;
