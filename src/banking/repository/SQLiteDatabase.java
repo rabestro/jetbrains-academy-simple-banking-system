@@ -25,14 +25,14 @@ public class SQLiteDatabase implements bankDatabase {
 
     @Override
     public Optional<Account> createAccount() {
-        log.info("Create Account");
+        final var account = new Account(generateAccountId());
+        log.info(() -> "Create Account #" + account.getCardNumber());
+
         try (final var connection = DriverManager.getConnection(url);
              final var sql = connection.prepareStatement(SQL_ADD_ACCOUNT)) {
 
-            final var account = new Account(generateAccountId());
             sql.setString(1, account.getCardNumber());
             sql.setString(2, account.getPinNumber());
-            log.finest(sql::toString);
             sql.executeUpdate();
 
             log.info(() -> String.format("Saved to database: Card: %s Pin: %s Balance: %d",
@@ -52,7 +52,6 @@ public class SQLiteDatabase implements bankDatabase {
             sql.setString(1, creditCardNumber);
             sql.setString(2, pinNumber);
             final var resultSet = sql.executeQuery();
-
             if (!resultSet.next()) {
                 return Optional.empty();
             }
