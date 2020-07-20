@@ -1,5 +1,6 @@
-package banking;
+package banking.domain;
 
+import java.util.Objects;
 import java.util.Random;
 
 import static java.lang.String.format;
@@ -33,12 +34,16 @@ public final class Account {
         return cardNumber;
     }
 
-    private static int generatePin() {
-        return random.nextInt(10000);
-    }
-
     public long getBalance() {
         return balance;
+    }
+
+    public void addIncome(final long income) {
+        balance += income;
+    }
+
+    public boolean isCorrectPin(final String pinNumber) {
+        return Objects.equals(this.pinNumber, pinNumber);
     }
 
     public static AccountBuilderCard builder() {
@@ -60,4 +65,9 @@ public final class Account {
     public interface AccountBuilder {
         Account build();
     }
+
+    private static int generatePin() {
+        return random.nextInt(10000);
+    }
+
 }

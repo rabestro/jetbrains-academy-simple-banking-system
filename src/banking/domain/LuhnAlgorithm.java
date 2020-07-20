@@ -1,4 +1,4 @@
-package banking;
+package banking.domain;
 
 public final class LuhnAlgorithm {
 
@@ -20,5 +20,9 @@ public final class LuhnAlgorithm {
     public static int calculateChecksum(final String number) {
         final int checksum = 10 - getControlNumber(number) % 10;
         return checksum % 10;
+    }
+
+    public static boolean isCorrectNumber(final String cardNumber) {
+        return getControlNumber(cardNumber) % 10 == 0;
     }
 }
