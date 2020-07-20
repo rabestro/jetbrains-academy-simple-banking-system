@@ -92,6 +92,11 @@ public class SQLiteDatabase implements bankDatabase {
 
     }
 
+    @Override
+    public boolean deleteAccount(final Account account) {
+        return false;
+    }
+
     private static long generateAccountId() {
         return ThreadLocalRandom.current().nextLong(100000000L, 999999999L);
     }

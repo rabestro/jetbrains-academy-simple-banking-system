@@ -37,7 +37,7 @@ public class InMemoryDatabase implements bankDatabase {
     }
 
     @Override
-    public boolean deleteAccount(Account account) {
+    public boolean deleteAccount(final Account account) {
         return accounts.remove(account);
     }
 
