@@ -33,12 +33,12 @@ public final class Account {
         return cardNumber;
     }
 
-    private static int generatePin() {
-        return random.nextInt(10000);
-    }
-
     public long getBalance() {
         return balance;
+    }
+
+    public void addIncome(final long income) {
+        balance += income;
     }
 
     public static AccountBuilderCard builder() {
@@ -60,4 +60,9 @@ public final class Account {
     public interface AccountBuilder {
         Account build();
     }
+
+    private static int generatePin() {
+        return random.nextInt(10000);
+    }
+
 }

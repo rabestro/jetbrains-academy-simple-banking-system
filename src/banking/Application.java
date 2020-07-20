@@ -1,7 +1,7 @@
 package banking;
 
 import banking.domain.Account;
-import banking.repository.AccountsRepository;
+import banking.repository.bankDatabase;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -10,9 +10,9 @@ public final class Application implements Runnable {
     private static final Logger log = Logger.getLogger(Application.class.getName());
 
     private final Scanner scanner = new Scanner(System.in);
-    private final AccountsRepository repository;
+    private final bankDatabase repository;
 
-    public Application(AccountsRepository repository) {
+    public Application(bankDatabase repository) {
         this.repository = repository;
     }
 
@@ -58,7 +58,7 @@ public final class Application implements Runnable {
         System.out.println("Enter your PIN:");
         final var pinNumber = scanner.nextLine();
 
-        repository.getAccount(cardNumber, pinNumber)
+        repository.findAccount(cardNumber, pinNumber)
                 .ifPresentOrElse(this::manageAccount, this::wrongAccount);
     }
 
@@ -71,7 +71,13 @@ public final class Application implements Runnable {
         log.info("The user has successfully logged in!");
         System.out.println("You have successfully logged in!");
         while (true) {
-            System.out.println("1. Balance\n" + "2. Log out\n" + "0. Exit");
+            System.out.println(String.join("\n",
+                    "1. Balance",
+                    "2. Add income",
+                    "3. Do transfer",
+                    "4. Close account",
+                    "5. Log out",
+                    "0. Exit"));
             final int choice = getMenuItem();
             switch (choice) {
                 case 0:
@@ -80,6 +86,16 @@ public final class Application implements Runnable {
                     System.out.println("Balance: " + account.getBalance());
                     break;
                 case 2:
+                    System.out.println("Enter income:");
+
+                    break;
+                case 3:
+                    System.out.println("Transfer");
+                    break;
+                case 4:
+                    System.out.println("The account has been closed!");
+                    break;
+                case 5:
                     System.out.println("You have successfully logged out!");
                     return;
             }
