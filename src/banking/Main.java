@@ -1,5 +1,6 @@
 package banking;
 
+import banking.menu.Menu;
 import banking.repository.InMemoryDatabase;
 import banking.repository.SQLiteDatabase;
 
@@ -23,9 +24,13 @@ public final class Main {
     public static void main(String[] args) {
         log.info("Simple Banking System started.");
 
-        new Application(args.length == 2 && "-fileName".equals(args[0])
+        final var app = new Application(args.length == 2 && "-fileName".equals(args[0])
                 ? new SQLiteDatabase(args[1])
-                : new InMemoryDatabase(new ArrayList<>())
-        ).run();
+                : new InMemoryDatabase(new ArrayList<>()));
+
+        new Menu("Simple Banking System")
+                .add("Create an account", app::createAccount)
+                .add("Log into account", app::logIntoAccount)
+                .run();
     }
 }

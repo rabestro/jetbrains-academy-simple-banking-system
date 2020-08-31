@@ -2,12 +2,13 @@ package banking;
 
 import banking.domain.Account;
 import banking.domain.LuhnAlgorithm;
+import banking.menu.Menu;
 import banking.repository.bankDatabase;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-public final class Application implements Runnable {
+public final class Application {
     private static final Logger log = Logger.getLogger(Application.class.getName());
 
     private final Scanner scanner = new Scanner(System.in);
@@ -17,27 +18,7 @@ public final class Application implements Runnable {
         this.repository = repository;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            System.out.println("1. Create an account\n"
-                    + "2. Log into account\n" + "0. Exit");
-            switch (getMenuItem()) {
-                case 0:
-                    System.exit(0);
-                case 1:
-                    createAccount();
-                    break;
-                case 2:
-                    logIntoAccount();
-                    break;
-                default:
-                    System.out.println("Incorrect menu number!");
-            }
-        }
-    }
-
-    private void createAccount() {
+    public void createAccount() {
         log.info("1. Create an account");
         repository.createAccount()
                 .ifPresentOrElse(this::printCardCreated,
@@ -51,7 +32,7 @@ public final class Application implements Runnable {
 
     }
 
-    private void logIntoAccount() {
+    public void logIntoAccount() {
         log.info("Log into account");
 
         System.out.println("Enter your card number:");
